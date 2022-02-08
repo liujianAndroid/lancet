@@ -46,11 +46,11 @@ buildscript {
 subprojects { pro ->
 
     repositories {
-        jcenter()
         mavenCentral()
         maven {
             url 'https://maven.google.com'
         }
+        jcenter()
     }
 
     if (pro.name == 'sample-test')return

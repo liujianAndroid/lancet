@@ -5,7 +5,8 @@ dependencies {
     compile gradleApi()
     compileOnly "com.android.tools.build:gradle:$android_tools_version"
     compile "com.google.code.gson:gson:2.8.0"
-    compile project(':lancet-weaver')
+    compile 'com.bytedance.tools.lancet:lancet-weaver-asm6:1.0.2'
+//    compile project(':lancet-weaver')
     testCompile gradleTestKit()
     testCompile 'junit:junit:4.12'
 }
@@ -28,3 +29,5 @@ task createClasspathManifest {
 dependencies {
     testRuntime files(createClasspathManifest)
 }
+
+apply from: rootProject.file('publish.gradle')

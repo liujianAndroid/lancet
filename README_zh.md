@@ -14,7 +14,7 @@ Lancet 是一个轻量级Android AOP框架。
 ```groovy
 dependencies {
     classpath 'com.android.tools.build:gradle:3.3.2'
-    classpath 'me.ele:lancet-plugin:1.0.6'
+    classpath 'com.bytedance.tools.lancet:lancet-plugin-asm6:1.0.2'
 }
 ```
 注意: Lancet 1.0.5 及以上版本只支持 gradle 3.3.2 及以上版本。
@@ -24,7 +24,7 @@ dependencies {
 apply plugin: 'me.ele.lancet'
 
 dependencies {
-    provided 'me.ele:lancet-base:1.0.6'
+    compileOnly 'me.ele:lancet-base:1.0.6'
 }
 ```
 

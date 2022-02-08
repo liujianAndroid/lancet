@@ -56,6 +56,9 @@ public class AopMethodAdjuster {
             if (element instanceof MethodInsnNode) { //MethodInsnNode
                 element = transform((MethodInsnNode) element);
             }
+            if (element instanceof LineNumberNode) {
+                ((LineNumberNode) element).line += 80000;
+            }
             element = element.getNext();
         }
     }
