@@ -42,11 +42,12 @@ class LancetTransform extends Transform {
     private final LancetExtension lancetExtension;
     private final GlobalContext global;
     private LocalCache cache;
-
+    private Project project;
 
     public LancetTransform(Project project, LancetExtension lancetExtension) {
         this.lancetExtension = lancetExtension;
         this.global = new GlobalContext(project);
+        this.project = project;
         // load the LocalCache from disk
         this.cache = new LocalCache(global.getLancetDir());
     }
@@ -105,7 +106,7 @@ class LancetTransform extends Transform {
 
         boolean incremental = lancetExtension.getIncremental();
 
-        PreClassAnalysis preClassAnalysis = new PreClassAnalysis(cache);
+        PreClassAnalysis preClassAnalysis = new PreClassAnalysis(cache, project);
 
         incremental = preClassAnalysis.execute(incremental, context);
 
@@ -124,7 +125,7 @@ class LancetTransform extends Transform {
         TransformInfo transformInfo = parser.parse(context.getHookClasses(), context.getGraph());
 
         Weaver weaver = AsmWeaver.newInstance(transformInfo, context.getGraph());
-        new ContextReader(context).accept(incremental, new TransformProcessor(context, weaver));
+        new ContextReader(context, project, false).accept(incremental, new TransformProcessor(context, weaver));
         Log.i("build successfully done");
         Log.i("now: " + System.currentTimeMillis());
 

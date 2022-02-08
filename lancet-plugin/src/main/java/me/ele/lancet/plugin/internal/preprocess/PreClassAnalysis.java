@@ -4,6 +4,8 @@ import com.android.build.api.transform.JarInput;
 import com.android.build.api.transform.QualifiedContent;
 import com.android.build.api.transform.Status;
 
+import org.gradle.api.Project;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,6 +33,7 @@ public class PreClassAnalysis {
 
     private LocalCache cache;
     private MetaGraphGeneratorImpl graph;
+    private Project project;
     private PreClassProcessor classProcessor = new AsmClassProcessorImpl();
 
 
@@ -39,8 +42,9 @@ public class PreClassAnalysis {
 
     private volatile boolean partial = true;
 
-    public PreClassAnalysis(LocalCache cache) {
+    public PreClassAnalysis(LocalCache cache, Project project) {
         this.cache = cache;
+        this.project = project;
         this.graph = new MetaGraphGeneratorImpl(cache.hookFlow());
     }
 
@@ -58,7 +62,7 @@ public class PreClassAnalysis {
         Log.d(context.toString());
         long duration = System.currentTimeMillis();
 
-        contextReader = new ContextReader(context);
+        contextReader = new ContextReader(context, project, true);
 
         if (incremental && context.isIncremental() && !cache.isHookClassModified(context)){
             // can use incremental
